@@ -29,6 +29,7 @@ class Loader extends HlthcrApp
       '/^hlthcr\/?$/' => Controllers\Home::class,
       '/^hlthcr\/settings\/?$/' => Controllers\Settings::class,
       '/^hlthcr\/api\/customer-lookup\/?$/' => Controllers\Api\CustomerLookup::class,
+      '/^hlthcr\/api\/user-lookup\/?$/' => Controllers\Api\UserLookup::class,
       '/^hlthcr\/api\/refused\/?$/' => Controllers\Api\Refused::class,
     ]);
     // Replaces Hubleto's lookup endpoint (same route), see HubletoOverrides/RecordLookup.

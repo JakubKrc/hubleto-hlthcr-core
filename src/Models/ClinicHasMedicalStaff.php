@@ -2,6 +2,8 @@
 
 namespace Hubleto\App\External\WaiBlue\HlthcrCore\Models;
 
+use Hubleto\App\External\WaiBlue\HlthcrCore\Services\Roles;
+use Hubleto\App\External\WaiBlue\HlthcrCore\Controllers\Api\UserLookup;
 use Hubleto\App\Community\Auth\Models\User;
 use Hubleto\Framework\Db\Column\Lookup;
 
@@ -26,7 +28,7 @@ class ClinicHasMedicalStaff extends \Hubleto\App\External\WaiBlue\HlthcrCore\Mod
     return array_merge(parent::describeColumns(), [
       'id_clinic' => (new Lookup($this, $this->translate('Clinic'), Clinic::class, 'CASCADE'))->setRequired()->setDefaultVisible(),
       'id_user' => (new Lookup($this, $this->translate('Medical staff user'), User::class, 'CASCADE'))
-        ->setReactComponent('InputUserSelect')
+        ->setEndpoint(UserLookup::endpointFor(Roles::MEDICAL_STAFF, 'id_user'))
         ->setRequired()
         ->setDefaultVisible()
       ,
