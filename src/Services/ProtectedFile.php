@@ -17,16 +17,8 @@ class ProtectedFile extends \Hubleto\Erp\Core
    */
   public function send(string $relativePath): string
   {
-    $uploadFolder = realpath($this->config()->getAsString('uploadFolder'));
-    $filePath = realpath($uploadFolder . '/' . $relativePath);
-
-    // realpath() resolves "..", so this also stops paths that point outside the upload folder.
-    $isFileInUploadFolder = $uploadFolder !== false
-      && $filePath !== false
-      && str_starts_with($filePath, $uploadFolder . DIRECTORY_SEPARATOR)
-      && is_file($filePath);
-
-    if (!$isFileInUploadFolder) {
+    $filePath = $this->getPathInUploadFolder($relativePath);
+    if ($filePath == '') {
       return $this->refuse(404, $this->translate('The file was not found.'));
     }
 
@@ -39,6 +31,30 @@ class ProtectedFile extends \Hubleto\Erp\Core
     header('Cache-Control: private, no-store');
 
     return (string) file_get_contents($filePath);
+  }
+
+  // Deletes an uploaded file. A path that leads outside the upload folder is ignored.
+  public function delete(string $relativePath): void
+  {
+    $filePath = $this->getPathInUploadFolder($relativePath);
+    if ($filePath != '') unlink($filePath);
+  }
+
+  // Full path of an existing file in the upload folder, or '' when there is none.
+  private function getPathInUploadFolder(string $relativePath): string
+  {
+    if ($relativePath == '') return '';
+
+    $uploadFolder = realpath($this->config()->getAsString('uploadFolder'));
+    $filePath = realpath($uploadFolder . '/' . $relativePath);
+
+    // realpath() resolves "..", so this also stops paths that point outside the upload folder.
+    $isFileInUploadFolder = $uploadFolder !== false
+      && $filePath !== false
+      && str_starts_with($filePath, $uploadFolder . DIRECTORY_SEPARATOR)
+      && is_file($filePath);
+
+    return $isFileInUploadFolder ? $filePath : '';
   }
 
   // Plain-text answer when the user may not download the file or it does not exist.

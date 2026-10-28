@@ -39,6 +39,10 @@ class GuardedRenderer extends \Hubleto\Erp\Renderer
     $routeData = $this->router()->parseRoute(Router::HTTP_GET, $route);
     $controllerClass = (string) ($routeData['controller'] ?? '');
 
+    // Hubleto signs in a "remember me" user only in parent::render(), so the guards would see no user.
+    $authProvider = $this->authProvider();
+    if (!$authProvider->isUserInSession()) $authProvider->authenticateRememberedUser();
+
     foreach (self::$routeGuardClasses as $routeGuardClass) {
       /** @var RouteGuard */
       $routeGuard = $this->getService($routeGuardClass);
