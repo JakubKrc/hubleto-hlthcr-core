@@ -64,8 +64,8 @@ appsToInstall:
   Hubleto\App\Community\Leads: { sidebarOrder: 0 }
   Hubleto\App\Community\Deals: { sidebarOrder: 0 }
   Hubleto\App\Community\Projects: { sidebarOrder: 0 }
-  # Tasks, Worksheets, Documents, Api and About come with the packages above; HlthcrCore hides them.
-  # Listing them here would install them twice.
+  # Tasks, Worksheets, Documents, Api and About come with the packages above; listing them here
+  # would install them twice. To hide them from the sidebar, use Settings > Sidebar after install.
   # Hlthcr apps (composer packages wai-blue/hubleto-hlthcr-*), in the order of the work in the sidebar.
   Hubleto\App\External\WaiBlue\HlthcrCore: { sidebarOrder: 309 }
   Hubleto\App\External\WaiBlue\HlthcrClients: { sidebarOrder: 308 }

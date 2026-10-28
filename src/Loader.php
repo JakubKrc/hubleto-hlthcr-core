@@ -72,24 +72,6 @@ class Loader extends HlthcrApp
 
       // Round 1, because "php hubleto app install" runs only round 1. Auth is always installed before custom apps.
       $this->getService(Services\Roles::class)->installRoles();
-
-      $this->hideUnusedHubletoApps();
-    }
-  }
-
-  // Neither legacy app has tasks or time tracking. Document templates, API and About are for administrators,
-  // who open them by their address. Hubleto installs these apps before the custom ones, so this setting wins.
-  private function hideUnusedHubletoApps(): void
-  {
-    $hiddenAppNamespaces = [
-      'Hubleto\\App\\Community\\Tasks',
-      'Hubleto\\App\\Community\\Worksheets',
-      'Hubleto\\App\\Community\\Documents',
-      'Hubleto\\App\\Community\\Api',
-      'Hubleto\\App\\Community\\About',
-    ];
-    foreach ($hiddenAppNamespaces as $appNamespace) {
-      $this->config()->save('apps/' . $appNamespace . '/sidebarOrder', '0');
     }
   }
 

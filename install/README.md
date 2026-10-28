@@ -39,7 +39,9 @@ and the apps and settings for `php hubleto init`.
 5. Point the web server to the project folder (the template's `.htaccess` sends every route to `index.php`).
    Under Apache, the web server user needs write access to `log`, `upload` and `secure`.
 
-6. Optional, FAKE demo data only: `php vendor/wai-blue/hubleto-hlthcr-core/src/Cli/generate-demo-data.php <demo-user-password>`.
+6. Optional: hide the Hubleto apps you do not need (for example Tasks, Worksheets) in Settings > Sidebar (order 0).
+
+7. Optional, FAKE demo data only: `php vendor/wai-blue/hubleto-hlthcr-core/src/Cli/generate-demo-data.php <demo-user-password>`.
 
 Updates later: `composer update "wai-blue/*"`, then `npm run build`.
 
