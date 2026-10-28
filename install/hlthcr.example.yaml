@@ -59,33 +59,16 @@ noPrompt: true
 
 ### Apps to be installed on top of the packages. Order matters: each app needs the ones above it.
 appsToInstall:
-  # Community Customers and Tasks join the leads, deals and projects tables; without these apps
-  # opening a customer and the calendar fail. Hidden from the sidebar (sidebarOrder 0).
-  Hubleto\App\Community\Leads: { sidebarOrder: 0 }
-  Hubleto\App\Community\Deals: { sidebarOrder: 0 }
-  Hubleto\App\Community\Projects: { sidebarOrder: 0 }
-  # Tasks, Worksheets, Documents, Api and About come with the packages above; listing them here
-  # would install them twice. To hide them from the sidebar, use Settings > Sidebar after install.
-  # Hlthcr apps (composer packages wai-blue/hubleto-hlthcr-*), in the order of the work in the sidebar.
-  Hubleto\App\External\WaiBlue\HlthcrCore: { sidebarOrder: 309 }
-  Hubleto\App\External\WaiBlue\HlthcrClients: { sidebarOrder: 308 }
-  Hubleto\App\External\WaiBlue\HlthcrBranches: { sidebarOrder: 301 }
-  Hubleto\App\External\WaiBlue\HlthcrEmployees: { sidebarOrder: 302 }
-  Hubleto\App\External\WaiBlue\HlthcrMedicalExams: { sidebarOrder: 303 }
-  Hubleto\App\External\WaiBlue\HlthcrAudits: { sidebarOrder: 304 }
-  Hubleto\App\External\WaiBlue\HlthcrDocuments: { sidebarOrder: 305 }
-  Hubleto\App\External\WaiBlue\HlthcrEvents: { sidebarOrder: 306 }
-
-extraConfigEnv:
-  appTitle: Hlthcr
-  # Hubleto 2 cannot translate the sidebar group titles through files, so they are set here.
-  sidebarGroups:
-    crm: { color: '#7a23dc', title: 'CRM', icon: 'fas fa-id-card-clip' }
-    marketing: { color: '#c6aa39', title: 'Marketing', icon: 'fas fa-bullseye' }
-    sales: { color: '#f50ab9', title: 'Predaj', icon: 'fas fa-users-viewfinder' }
-    productivity: { color: '#20689f', title: 'Produktivita', icon: 'fas fa-diagram-project' }
-    human-resources: { color: '#759f20', title: 'Ľudské zdroje', icon: 'fas fa-helmet' }
-    finance: { color: '#ce4715ff', title: 'Financie', icon: 'fas fa-credit-card' }
-    custom: { color: '#888888', title: 'Pracovná zdravotná služba', icon: 'fas fa-puzzle-piece' }
-    maintenance: { color: '#c0c90e', title: 'Údržba', icon: 'fas fa-cog' }
-    help: { color: '#005a16ff', title: 'Pomoc', icon: 'fas fa-life-ring' }
+  # Needed: community Customers, Calendar and Tasks read the leads, deals and projects tables.
+  Hubleto\App\Community\Leads: []
+  Hubleto\App\Community\Deals: []
+  Hubleto\App\Community\Projects: []
+  # Hlthcr apps (composer packages wai-blue/hubleto-hlthcr-*).
+  Hubleto\App\External\WaiBlue\HlthcrCore: []
+  Hubleto\App\External\WaiBlue\HlthcrClients: []
+  Hubleto\App\External\WaiBlue\HlthcrBranches: []
+  Hubleto\App\External\WaiBlue\HlthcrEmployees: []
+  Hubleto\App\External\WaiBlue\HlthcrMedicalExams: []
+  Hubleto\App\External\WaiBlue\HlthcrAudits: []
+  Hubleto\App\External\WaiBlue\HlthcrDocuments: []
+  Hubleto\App\External\WaiBlue\HlthcrEvents: []
