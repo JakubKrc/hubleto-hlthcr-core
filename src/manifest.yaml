@@ -8,3 +8,7 @@ author:
   name: "Hlthcr"
   nick: "hlthcr"
 highlight: Shared code lists for occupational health (hazards, clinics, cars) and shared services of the Hlthcr apps.
+requires:
+  - Hubleto\App\Community\Auth
+  - Hubleto\App\Community\Settings
+  - Hubleto\App\Community\Customers

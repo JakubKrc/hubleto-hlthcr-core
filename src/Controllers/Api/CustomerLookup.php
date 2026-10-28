@@ -4,6 +4,7 @@ namespace Hubleto\App\External\WaiBlue\HlthcrCore\Controllers\Api;
 
 use Hubleto\App\Community\Customers\Models\Customer;
 use Hubleto\App\External\WaiBlue\HlthcrCore\Services\AccessScope;
+use Hubleto\App\External\WaiBlue\HlthcrCore\Services\DropdownRecords;
 
 /**
  * Client (Customer) dropdown limited to visible clients, also when HlthcrClients (which scopes the Customer
@@ -25,8 +26,7 @@ class CustomerLookup extends \Hubleto\Erp\Controllers\ApiController
       $query = $mCustomer->record->restrictToOfferedRecords($query);
     }
 
-    $customers = $mCustomer->record->prepareLookupData($query->get()->toArray());
     // A list, as Hubleto's own lookup returns since Hubleto 2.
-    return $customers;
+    return $this->getService(DropdownRecords::class)->load($mCustomer, $query);
   }
 }

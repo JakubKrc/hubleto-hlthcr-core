@@ -3,6 +3,7 @@
 namespace Hubleto\App\External\WaiBlue\HlthcrCore\Controllers\Api;
 
 use Hubleto\App\Community\Auth\Models\User;
+use Hubleto\App\External\WaiBlue\HlthcrCore\Services\DropdownRecords;
 use Hubleto\App\External\WaiBlue\HlthcrCore\Services\Roles;
 
 /**
@@ -48,8 +49,7 @@ class UserLookup extends \Hubleto\Erp\Controllers\ApiController
       }
     });
 
-    $users = $mUser->record->prepareLookupData($query->get()->toArray());
     // A list, as Hubleto's own lookup returns since Hubleto 2.
-    return $users;
+    return $this->getService(DropdownRecords::class)->load($mUser, $query);
   }
 }

@@ -15,7 +15,7 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
 {
   const REFUSED_ROUTE = 'hlthcr/api/refused';
 
-  // Code lists, the clinic staff and workflows: only administrators and managers change them.
+  // Code lists, the clinic staff, event attendees and workflows: only administrators and managers change them.
   const MODELS_FOR_ADMINISTRATORS_AND_MANAGERS = [
     'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Hazard',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Clinic',
@@ -23,6 +23,7 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Car',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrBranches\\Models\\BranchType',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrClients\\Models\\ClientType',
+    'Hubleto\\App\\External\\WaiBlue\\HlthcrEvents\\Models\\EventHasUser',
     'Hubleto\\App\\Community\\Workflow\\Models\\Workflow',
     'Hubleto\\App\\Community\\Workflow\\Models\\WorkflowStep',
   ];

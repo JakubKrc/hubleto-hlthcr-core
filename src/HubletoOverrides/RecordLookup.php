@@ -2,6 +2,8 @@
 
 namespace Hubleto\App\External\WaiBlue\HlthcrCore\HubletoOverrides;
 
+use Hubleto\App\External\WaiBlue\HlthcrCore\Services\DropdownRecords;
+
 /**
  * Hubleto's record lookup without its 5-minute cache. That cache is shared by all users,
  * but Hlthcr lookups offer each user only the records the user may see.
@@ -18,7 +20,6 @@ class RecordLookup extends \Hubleto\Framework\Controllers\Api\Record\Lookup
       $query = $this->model->record->restrictToOfferedRecords($query);
     }
 
-    $records = $query->get()->toArray();
-    return $this->model->record->prepareLookupData($records);
+    return $this->getService(DropdownRecords::class)->load($this->model, $query);
   }
 }

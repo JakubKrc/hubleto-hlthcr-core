@@ -3,6 +3,7 @@
 namespace Hubleto\App\External\WaiBlue\HlthcrCore\Models\Traits;
 
 use Hubleto\App\Community\Workflow\Models\Workflow;
+use Hubleto\App\Community\Workflow\Models\WorkflowHistory;
 use Hubleto\App\Community\Workflow\Models\WorkflowStep;
 use Hubleto\Framework\Exceptions\RecordSaveException;
 
@@ -41,5 +42,24 @@ trait StaysInOwnWorkflow
     if (!$isWorkflowOfGroup || !$isStepOfWorkflow) {
       throw new RecordSaveException($this->translate('Choose a state of this record\'s own workflow.'));
     }
+  }
+
+  // For a record that gets its first step without a model update: Hubleto logs the history only on updates.
+  protected function logFirstWorkflowStep(array $savedRecord): void
+  {
+    $idWorkflowStep = (int) ($savedRecord['id_workflow_step'] ?? 0);
+    if ($idWorkflowStep <= 0) return;
+
+    // No user on the command line (demo data).
+    $idUser = (int) $this->authProvider()->getUserId();
+
+    $this->getModel(WorkflowHistory::class)->record->recordCreate([
+      'model' => get_class($this),
+      'record_id' => (int) $savedRecord['id'],
+      'datetime_change' => date('Y-m-d H:i:s'),
+      'id_user' => $idUser > 0 ? $idUser : null,
+      'id_workflow' => (int) ($savedRecord['id_workflow'] ?? 0),
+      'id_workflow_step' => $idWorkflowStep,
+    ]);
   }
 }
