@@ -11,8 +11,36 @@ use Hubleto\App\Community\Auth\Models\UserHasRole;
  */
 class DemoData extends \Hubleto\Erp\Core
 {
-  // Set by Cli/generate-demo-data.php. There is no default, so a public server never gets a known password.
-  const DEMO_PASSWORD_CONFIG_PATH = 'hlthcrDemoPassword';
+  // Hubleto calls generateDemoData() of every Hlthcr app; only the first call generates the data.
+  private static bool $isHlthcrDemoDataGenerated = false;
+
+  /**
+   * Demo data of all installed Hlthcr apps ("generateDemoData: true" in the init yaml).
+   */
+  public function generateForAllHlthcrApps(): void
+  {
+    if (self::$isHlthcrDemoDataGenerated) return;
+    self::$isHlthcrDemoDataGenerated = true;
+
+    // Order matters: later apps use records created by earlier ones.
+    $hlthcrAppNamespaces = [
+      'Hubleto\App\External\WaiBlue\HlthcrCore',
+      'Hubleto\App\External\WaiBlue\HlthcrClients',
+      'Hubleto\App\External\WaiBlue\HlthcrBranches',
+      'Hubleto\App\External\WaiBlue\HlthcrEmployees',
+      'Hubleto\App\External\WaiBlue\HlthcrAudits',
+      'Hubleto\App\External\WaiBlue\HlthcrDocuments',
+      'Hubleto\App\External\WaiBlue\HlthcrEvents',
+      'Hubleto\App\External\WaiBlue\HlthcrMedicalExams',
+    ];
+
+    foreach ($hlthcrAppNamespaces as $appNamespace) {
+      $app = $this->appManager()->getApp($appNamespace);
+      if ($app instanceof \Hubleto\App\External\WaiBlue\HlthcrCore\HlthcrApp) {
+        $app->generateHlthcrDemoData();
+      }
+    }
+  }
 
   public function getDemoUserDefinitions(): array
   {
@@ -55,13 +83,11 @@ class DemoData extends \Hubleto\Erp\Core
     ];
   }
 
-  public function getDemoPassword(): string
+  // As with Hubleto's own demo users, the password is the login name: "hygienik1" for hygienik1@example.com.
+  // Demo data is for local and test instances only.
+  public function getDemoPassword(string $email): string
   {
-    $demoPassword = $this->config()->getAsString(self::DEMO_PASSWORD_CONFIG_PATH);
-    if ($demoPassword == '') {
-      throw new \Exception('Password for demo users is not set. Run Cli/generate-demo-data.php <password>.');
-    }
-    return $demoPassword;
+    return strstr($email, '@', true);
   }
 
   /**
@@ -93,7 +119,7 @@ class DemoData extends \Hubleto\Erp\Core
         'nick' => $userDefinition['first_name'],
         'email' => $userDefinition['email'],
         'login' => $userDefinition['email'],
-        'password' => password_hash($this->getDemoPassword(), PASSWORD_DEFAULT),
+        'password' => password_hash($this->getDemoPassword($userDefinition['email']), PASSWORD_DEFAULT),
         'is_active' => true,
         'id_default_company' => 1,
         'language' => 'sk',

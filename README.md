@@ -16,8 +16,4 @@ php hubleto app install "Hubleto\App\External\WaiBlue\HlthcrCore"
 npm run build
 ```
 
-Fake demo data of all installed Hlthcr apps (from the project folder):
-
-```bash
-php vendor/wai-blue/hubleto-hlthcr-core/src/Cli/generate-demo-data.php <demo-user-password>
-```
+Fake demo data: `generateDemoData: true` in the init yaml (demo users are listed in `install/README.md`).

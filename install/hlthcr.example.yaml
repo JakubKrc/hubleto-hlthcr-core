@@ -54,6 +54,7 @@ language: sk
 packagesToInstall: crm,maintenance,help
 
 ### Miscellaneous
+# true: FAKE demo data of Hubleto and of the Hlthcr apps (demo users: install/README.md)
 generateDemoData: false
 noPrompt: true
 

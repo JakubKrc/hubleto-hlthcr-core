@@ -136,7 +136,7 @@ class Loader extends HlthcrApp
     return 0;
   }
 
-  public function generateDemoData(): void
+  public function generateHlthcrDemoData(): void
   {
     $this->setDemoHazardIntervals();
     $demoUserIds = $this->getService(Services\DemoData::class)->ensureDemoUsers();

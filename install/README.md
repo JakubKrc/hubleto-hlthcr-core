@@ -40,7 +40,18 @@ and the apps and settings for `php hubleto init`.
 
 6. Optional: hide the Hubleto apps you do not need (for example Tasks, Worksheets) in Settings > Sidebar (order 0).
 
-7. Optional, FAKE demo data only: `php vendor/wai-blue/hubleto-hlthcr-core/src/Cli/generate-demo-data.php <demo-user-password>`.
+7. Optional, FAKE demo data: set `generateDemoData: true` in the yaml before `php hubleto init`.
+   Besides Hubleto's own demo data, it adds demo clients with branches, employees, exams, audits, documents
+   and events, and one demo user per Hlthcr role. As with Hubleto's demo users, the password is the login name:
+
+   | Role | Login | Password |
+   |---|---|---|
+   | Hygienist | `hygienik1@example.com`, `hygienik2@example.com` | `hygienik1`, `hygienik2` |
+   | Nurse | `sestra@example.com` | `sestra` |
+   | Medical staff | `lekar@example.com` | `lekar` |
+   | Manager | `manazer@example.com` | `manazer` |
+
+   The passwords are public: on a server reachable from the internet, change them after install.
 
 Updates later: `composer update "wai-blue/*"`, then `npm run build`.
 
