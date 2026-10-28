@@ -21,14 +21,15 @@ class AccessScope extends \Hubleto\Erp\Core
   }
 
   /**
-   * The Hygienist role sees own clients, whatever the user type. External users see nothing here;
-   * a client zone would give them their own pages and scope. Otherwise the same rule as Hubleto uses for Customers.
+   * The Hlthcr role decides, whatever the user type (both legacy apps): hygienists see own clients, nurses and medical
+   * staff all. External users see nothing; users with no Hlthcr role follow Hubleto's rule for Customers.
    */
   public function getVisibilityOfActiveUser(): string
   {
     $roles = $this->roles();
     if ($roles->isActiveUserAdministratorOrManager()) return self::SEES_ALL;
     if ($roles->isActiveUserExternal()) return self::SEES_NOTHING;
+    if ($roles->activeUserHasRole(Roles::NURSE) || $roles->activeUserHasRole(Roles::MEDICAL_STAFF)) return self::SEES_ALL;
     if ($roles->activeUserHasRole(Roles::HYGIENIST)) return self::SEES_OWNED;
 
     $userType = $this->authProvider()->getUserType();
@@ -42,6 +43,15 @@ class AccessScope extends \Hubleto\Erp\Core
     }
 
     return self::SEES_ALL;
+  }
+
+  public function activeUserHasHlthcrRole(): bool
+  {
+    $roles = $this->roles();
+    foreach (array_keys($roles->getRoleDefinitions()) as $roleKey) {
+      if ($roles->activeUserHasRole($roleKey)) return true;
+    }
+    return false;
   }
 
   public function restrictToVisibleCustomers(mixed $query, string $customerIdColumn): mixed

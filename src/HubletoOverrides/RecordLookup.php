@@ -12,6 +12,12 @@ class RecordLookup extends \Hubleto\Framework\Controllers\Api\Record\Lookup
   {
     $search = $this->router()->urlParamAsString('search');
     $query = $this->model->record->prepareLookupQuery($search);
+
+    // Some dropdowns offer fewer records than they can show (for example only active ones).
+    if (method_exists($this->model->record, 'restrictToOfferedRecords')) {
+      $query = $this->model->record->restrictToOfferedRecords($query);
+    }
+
     $records = $query->get()->toArray();
     return $this->model->record->prepareLookupData($records);
   }

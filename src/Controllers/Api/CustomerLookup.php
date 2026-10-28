@@ -21,6 +21,9 @@ class CustomerLookup extends \Hubleto\Erp\Controllers\ApiController
 
     $query = $mCustomer->record->prepareLookupQuery($search);
     $query = $this->getService(AccessScope::class)->restrictToVisibleCustomers($query, 'customers.id');
+    if (method_exists($mCustomer->record, 'restrictToOfferedRecords')) {
+      $query = $mCustomer->record->restrictToOfferedRecords($query);
+    }
 
     $customers = $mCustomer->record->prepareLookupData($query->get()->toArray());
     // A list, as Hubleto's own lookup returns since Hubleto 2.
