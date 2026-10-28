@@ -4,6 +4,7 @@ namespace Hubleto\App\External\WaiBlue\HlthcrCore\Models;
 
 use Hubleto\Framework\Db\Column\Integer;
 use Hubleto\Framework\Db\Column\Varchar;
+use Hubleto\Framework\Exceptions\RecordSaveException;
 
 /**
  * An item of the hazard catalogue (both legacy apps call it "položka kategorizácie").
@@ -25,6 +26,8 @@ class Hazard extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   public string $recordManagerClass = RecordManagers\Hazard::class;
   public ?string $lookupSqlValue = '{%TABLE%}.name';
   public ?string $lookupUrlDetail = 'hlthcr/hazards/{%ID%}';
+  // Grouped by type in dropdowns, as similar names exist in several types.
+  public string $lookupOrderBy = '{%TABLE%}.type, {%TABLE%}.name';
 
   public function getTypeNames(): array
   {
@@ -95,6 +98,35 @@ class Hazard extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   public function describeForm(): \Hubleto\Framework\Description\Form
   {
     return parent::describeForm();
+  }
+
+  public function onBeforeCreate(array $record): array
+  {
+    $record = parent::onBeforeCreate($record);
+    $this->refuseDuplicateName($record);
+    return $record;
+  }
+
+  public function onBeforeUpdate(array $record): array
+  {
+    $record = parent::onBeforeUpdate($record);
+    $this->refuseDuplicateName($record);
+    return $record;
+  }
+
+  // Hazard names are unique in both legacy apps (migration Hazard_0002 adds the index).
+  private function refuseDuplicateName(array $record): void
+  {
+    if (!array_key_exists('name', $record)) return;
+
+    $sameNameExists = $this->record
+      ->where('name', trim((string) $record['name']))
+      ->where('id', '<>', (int) ($record['id'] ?? 0))
+      ->exists()
+    ;
+    if ($sameNameExists) {
+      throw new RecordSaveException($this->translate('A hazard of this name already exists.'));
+    }
   }
 
   /**

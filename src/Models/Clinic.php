@@ -17,6 +17,8 @@ class Clinic extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   {
     return array_merge(parent::describeColumns(), [
       'name' => (new Varchar($this, $this->translate('Name')))->setRequired()->setDefaultVisible(),
+      // Free text in one legacy app; the other has a list of specialties plus its own text.
+      'type' => (new Varchar($this, $this->translate('Type / specialty')))->setDefaultVisible(),
       'street' => (new Varchar($this, $this->translate('Street')))->setDefaultVisible(),
       'city' => (new Varchar($this, $this->translate('City')))->setDefaultVisible(),
       'postal_code' => (new Varchar($this, $this->translate('Postal code')))->setDefaultVisible(),

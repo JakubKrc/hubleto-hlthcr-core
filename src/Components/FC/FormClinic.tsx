@@ -25,6 +25,7 @@ const FormClinic = (props: FormProps) => <Form
   tabs={{
     default: {title: <b>{T.translate('Clinic')}</b>, content: () => <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
       <Input field='name' />
+      <Input field='type' />
       <Input field='street' />
       <Input field='city' />
       <Input field='postal_code' />

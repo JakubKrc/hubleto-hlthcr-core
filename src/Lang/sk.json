@@ -22,7 +22,8 @@
         "Exam interval, category 1": "Interval LPP, kategória 1",
         "Exam interval, category 2": "Interval LPP, kategória 2",
         "Exam interval, category 3": "Interval LPP, kategória 3",
-        "Exam interval, category 4": "Interval LPP, kategória 4"
+        "Exam interval, category 4": "Interval LPP, kategória 4",
+        "A hazard of this name already exists.": "Položka s týmto názvom už existuje."
     },
     "Models\\Clinic": {
         "Name": "Názov",
@@ -33,7 +34,8 @@
         "Phone": "Telefón",
         "E-mail": "E-mail",
         "Note": "Poznámka",
-        "Add clinic": "Pridať ambulanciu"
+        "Add clinic": "Pridať ambulanciu",
+        "Type / specialty": "Typ / odbornosť"
     },
     "Models\\Car": {
         "Name": "Názov",

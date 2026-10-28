@@ -16,7 +16,6 @@ class RoleApps extends \Hubleto\Erp\Core
     'Hubleto\\App\\Community\\Dashboards',
     'Hubleto\\App\\Community\\Notifications',
     'Hubleto\\App\\Community\\Customers',
-    'Hubleto\\App\\Community\\Contacts',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrBranches',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrEmployees',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrMedicalExams',
@@ -24,7 +23,9 @@ class RoleApps extends \Hubleto\Erp\Core
 
   // Manager, hygienist and nurse: every internal Hlthcr app, the calendar and workflows.
   // Hubleto's Documents app holds only document templates, which administrators manage.
+  // Contact persons too: both legacy apps hide them from medical staff.
   const APPS_FOR_INTERNAL_ROLES = [
+    'Hubleto\\App\\Community\\Contacts',
     'Hubleto\\App\\Community\\Calendar',
     'Hubleto\\App\\Community\\Workflow',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrCore',
