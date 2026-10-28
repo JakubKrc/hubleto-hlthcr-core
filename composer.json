@@ -1,6 +1,6 @@
 {
     "name": "wai-blue/hubleto-hlthcr-core",
-    "license": "MIT",
+    "license": "proprietary",
     "description": "Hlthcr core for Hubleto: occupational health code lists (hazards, clinics, cars), roles and shared services of the Hlthcr apps",
     "autoload": {
         "psr-4": {
