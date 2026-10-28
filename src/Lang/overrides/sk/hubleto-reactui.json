@@ -1,0 +1,30 @@
+{
+    "Components\\Form": {
+        "Help with AI": "Pomoc s AI",
+        "Loading record, please wait.": "Načítavam záznam, čakajte prosím.",
+        "Open in new tab": "Otvoriť v novej karte"
+    },
+    "Components\\Inputs\\File": {
+        "Upload file": "Nahrať súbor",
+        "Upload image": "Nahrať obrázok"
+    },
+    "Components\\Table": {
+        "Columns": "Stĺpce",
+        "Copy cell content to clipboard": "Kopírovať obsah bunky",
+        "Delete": "Zmazať",
+        "Export to CSV": "Exportovať do CSV",
+        "Import from CSV": "Importovať z CSV",
+        "Search...": "Hľadať...",
+        "Show as plain table": "Zobraziť ako jednoduchú tabuľku",
+        "Show/Hide filter": "Zobraziť / skryť filter"
+    },
+    "Components\\WorkflowSelector": {
+        "Change workflow": "Zmeniť workflow",
+        "Last update: {{ date }} by {{ user }}": "Posledná zmena: {{ date }}, {{ user }}",
+        "unknown": "neznámy"
+    },
+    "Components\\Inputs\\Password": {
+        "New password": "Nové heslo",
+        "Confirm new password": "Potvrďte nové heslo"
+    }
+}

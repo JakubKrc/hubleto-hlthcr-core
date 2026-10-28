@@ -1,0 +1,10 @@
+namespace: Hubleto\App\External\WaiBlue\HlthcrCore
+appType: external
+sidebarGroup: custom
+rootUrlSlug: hlthcr
+name: Code lists
+icon: fas fa-list-check
+author:
+  name: "Hlthcr"
+  nick: "hlthcr"
+highlight: Shared code lists for occupational health (hazards, clinics, cars) and shared services of the Hlthcr apps.

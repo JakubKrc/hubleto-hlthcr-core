@@ -1,0 +1,49 @@
+{% set defaultDashboard = viewParams.defaultDashboard %}
+
+<div class="md:hidden grid grid-cols-3 gap-0 m-2">
+  {% for app in viewParams.appsInSidebar %}
+    <a class="btn btn-small btn-transparent rounded-none border-none" href="{{ config.projectUrl }}/{{ app.manifest.rootUrlSlug }}" title="{{ app.manifest.nameTranslated }}">
+      <span class="icon"><i class="{{ app.manifest.icon }}"></i></span>
+      <span class="text">{{ app.manifest.nameTranslated }}</span>
+    </a>
+  {% endfor %}
+</div>
+
+<div class="w-full h-full flex-dyn">
+  <div class="grow">
+    <div class="text-primary my-8 text-center text-[3em]">{{ viewParams.greeting }}, {{ user.first_name ?? user.email }}</div>
+
+    <div class="mt-2 mx-auto my-8 max-w-[90vw] md:max-w-[50vw]">
+      <hblreact-dashboards-dashboard
+        int:id-dashboard='{{ defaultDashboard.id }}'
+        string:redirect-url='{{ config.projectUrl }}'
+        json:panels='{{ defaultDashboard.PANELS|json_encode|raw }}'
+        bool:show-add-new-panel-button='true'
+      ></hblreact-dashboards-dashboard>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 w-64 h-full items-center">
+    <div class="p-2 w-full mb-2 flex flex-col gap-2 dark:text-white">
+      {% if user.DEFAULT_COMPANY.logo != '' %}
+        <div class="my-8 text-center"><img src="{{ config.uploadUrl }}/{{ user.DEFAULT_COMPANY.logo }}" class="max-h-32 max-w-32 m-auto" /></div>
+      {% endif %}
+      <div class="p-4 shadow-sm m-auto">
+        <div class="my-8 text-center">
+          {% if user.photo %}
+            <img src="{{ config.uploadUrl }}/{{ user.photo }}" class='max-w-48 max-h-48 rounded-4xl' />
+          {% else %}
+            <i class='fas fa-user my-8 text-[6em] text-primary/20'></i>
+          {% endif %}
+        </div>
+        <div><b>{{ user.first_name }} {{ user.last_name }}</b></div>
+        <div><b>{{ user.DEFAULT_COMPANY.name }}</b></div>
+        {% if user.position %} <div class="badge">{{ user.position }}</div> {% endif %}
+        <div class="mt-2">{{ user.email }}</div>
+        <div class="mt-2">
+          <a href="settings/about-me" class="btn btn-transparent" title="{{ translate('My profile') }}"><span class="icon"><i class="fas fa-pencil"></i></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+{
+    "manifest": {
+        "Code lists": "Číselníky",
+        "Shared code lists for occupational health (hazards, clinics, cars) and shared services of the Hlthcr apps.": "Spoločné číselníky pracovnej zdravotnej služby (riziká, ambulancie, autá) a spoločné služby aplikácií Healthcare.",
+        "Hazards (categorisation items)": "Položky vo výslednej kategorizácii",
+        "Hazards": "Riziká",
+        "Clinics": "Ambulancie",
+        "Cars": "Autá",
+        "Demo clinic": "Ukážková ambulancia",
+        "Settings": "Nastavenia"
+    },
+    "Models\\Hazard": {
+        "Name": "Názov",
+        "Add hazard": "Pridať položku",
+        "Work factor": "Faktor práce",
+        "Special regulation": "Osobitný predpis",
+        "Professional activity": "Odborná činnosť",
+        "Examination": "Vyšetrenie",
+        "months": "mesiacov",
+        "Type": "Typ",
+        "Exam interval without category": "Interval LPP bez kategórie",
+        "Exam interval, category 1": "Interval LPP, kategória 1",
+        "Exam interval, category 2": "Interval LPP, kategória 2",
+        "Exam interval, category 3": "Interval LPP, kategória 3",
+        "Exam interval, category 4": "Interval LPP, kategória 4"
+    },
+    "Models\\Clinic": {
+        "Name": "Názov",
+        "Street": "Ulica",
+        "City": "Mesto",
+        "Postal code": "PSČ",
+        "Contact person": "Kontaktná osoba",
+        "Phone": "Telefón",
+        "E-mail": "E-mail",
+        "Note": "Poznámka",
+        "Add clinic": "Pridať ambulanciu"
+    },
+    "Models\\Car": {
+        "Name": "Názov",
+        "License plate": "ŠPZ",
+        "Add car": "Pridať auto"
+    },
+    "Controllers\\Home": {
+        "Code lists": "Číselníky",
+        "Hazards": "Riziká",
+        "Clinics": "Ambulancie",
+        "Cars": "Autá"
+    },
+    "Services\\Roles": {
+        "Manager": "Manažér",
+        "Sees and edits everything except settings.": "Vidí a upravuje všetko okrem nastavení.",
+        "Hygienist": "Hygienik",
+        "Works with own clients and branches: audits, documents, job categorisation.": "Pracuje so svojimi klientmi a prevádzkami: audity, dokumenty, kategorizácia prác.",
+        "Nurse": "Zdravotná sestra",
+        "Plans and records medical exams of client employees.": "Plánuje a eviduje lekárske prehliadky zamestnancov klientov.",
+        "Medical staff": "Zdravotný personál",
+        "Clinic staff. Sees medical exams of own clinic only.": "Personál ambulancie. Vidí len prehliadky svojej ambulancie."
+    },
+    "Components\\FormHazard": {
+        "Hazard": "Položka kategorizácie",
+        "Exam intervals": "Intervaly LPP"
+    },
+    "Components\\FormClinic": {
+        "Clinic": "Ambulancia",
+        "Medical staff": "Zdravotný personál",
+        "Save the clinic first.": "Najprv uložte ambulanciu."
+    },
+    "Components\\FormCar": {
+        "Car": "Auto"
+    },
+    "Services\\ProtectedFile": {
+        "The file was not found.": "Súbor sa nenašiel."
+    },
+    "Models\\ClinicHasMedicalStaff": {
+        "Clinic": "Ambulancia",
+        "Medical staff user": "Používateľ (zdravotný personál)",
+        "Add medical staff user": "Pridať zdravotný personál"
+    },
+    "Components\\FormClinicHasMedicalStaff": {
+        "Medical staff of the clinic": "Zdravotný personál ambulancie"
+    },
+    "Controllers\\Settings": {
+        "Code lists": "Číselníky",
+        "Settings": "Nastavenia",
+        "Hazards and exam intervals": "Riziká a intervaly LPP",
+        "Clinics and their medical staff": "Ambulancie a ich zdravotný personál",
+        "Cars": "Autá",
+        "The code lists shared by all Hlthcr apps. Exam intervals of the hazards set the next exam date.": "Číselníky spoločné pre všetky aplikácie Hlthcr. Intervaly LPP pri rizikách určujú dátum ďalšej prehliadky."
+    },
+    "Controllers\\Api\\Refused": {
+        "You do not have permission to make this change.": "Na túto zmenu nemáte oprávnenie."
+    },
+    "HubletoOverrides\\Search": {
+        "Help: how to search": "Pomoc: ako vyhľadávať"
+    },
+    "Controllers\\HomePage": {
+        "Good morning": "Dobré ráno",
+        "Good day": "Dobrý deň",
+        "Good evening": "Dobrý večer",
+        "My profile": "Môj profil"
+    },
+    "Components\\ProtectedFileInput": {
+        "Upload file": "Nahrať súbor"
+    }
+}

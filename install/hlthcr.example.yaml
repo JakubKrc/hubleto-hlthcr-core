@@ -1,0 +1,91 @@
+### Hlthcr (occupational health CRM): install config for "php hubleto init", Hubleto 2.
+### Copy to the root of a new Hubleto project as hlthcr.yaml, fill in the URL, DB and admin values, then:
+###   php hubleto prepare-composer hlthcr.yaml && composer update   (once: adds the Hlthcr packages)
+###   php hubleto init hlthcr.yaml   (DESTRUCTIVE: drops and recreates the database)
+### Re-init: delete ConfigEnv.php first (init refuses to run otherwise). Full steps: install/README.md.
+
+### Hlthcr packages, merged into the project's composer.json by "php hubleto prepare-composer".
+### Run it only once: a second run doubles the entries and breaks composer.json.
+### "no-api" makes composer clone with plain git, so your git login (HTTPS or SSH key) is enough.
+composer:
+  repositories:
+    wai-blue/hubleto-hlthcr-core: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-core', no-api: true }
+    wai-blue/hubleto-hlthcr-clients: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-clients', no-api: true }
+    wai-blue/hubleto-hlthcr-branches: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-branches', no-api: true }
+    wai-blue/hubleto-hlthcr-employees: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-employees', no-api: true }
+    wai-blue/hubleto-hlthcr-medical-exams: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-medical-exams', no-api: true }
+    wai-blue/hubleto-hlthcr-audits: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-audits', no-api: true }
+    wai-blue/hubleto-hlthcr-documents: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-documents', no-api: true }
+    wai-blue/hubleto-hlthcr-events: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-events', no-api: true }
+  require:
+    wai-blue/hubleto-hlthcr-core: dev-main
+    wai-blue/hubleto-hlthcr-clients: dev-main
+    wai-blue/hubleto-hlthcr-branches: dev-main
+    wai-blue/hubleto-hlthcr-employees: dev-main
+    wai-blue/hubleto-hlthcr-medical-exams: dev-main
+    wai-blue/hubleto-hlthcr-audits: dev-main
+    wai-blue/hubleto-hlthcr-documents: dev-main
+    wai-blue/hubleto-hlthcr-events: dev-main
+
+### Project location
+rewriteBase: /my-project/
+# URLs must be written as https://host/{{ rewriteBase }} (rewriteBase is inserted without slashes).
+projectUrl: http://localhost/{{ rewriteBase }}
+srcUrl: http://localhost/{{ rewriteBase }}/vendor/hubleto/erp
+assetsUrl: http://localhost/{{ rewriteBase }}/vendor/hubleto/assets
+
+### Database connection
+dbHost: localhost
+dbUser: hubleto
+dbPassword: CHANGE-ME
+dbName: hbl_hlthcr
+dbCodepage: utf8mb4
+
+### Initial account access
+accountFullName: Hlthcr
+adminName: Admin
+adminFamilyName: Hlthcr
+adminNick: admin
+adminEmail: admin@example.com
+adminPassword: CHANGE-ME
+language: sk
+
+# crm is always installed (Customers, Contacts, Calendar, Documents, Mail, Notifications, ...)
+packagesToInstall: crm,maintenance,help
+
+### Miscellaneous
+generateDemoData: false
+noPrompt: true
+
+### Apps to be installed on top of the packages. Order matters: each app needs the ones above it.
+appsToInstall:
+  # Community Customers and Tasks join the leads, deals and projects tables; without these apps
+  # opening a customer and the calendar fail. Hidden from the sidebar (sidebarOrder 0).
+  Hubleto\App\Community\Leads: { sidebarOrder: 0 }
+  Hubleto\App\Community\Deals: { sidebarOrder: 0 }
+  Hubleto\App\Community\Projects: { sidebarOrder: 0 }
+  # Tasks, Worksheets, Documents, Api and About come with the packages above; HlthcrCore hides them.
+  # Listing them here would install them twice.
+  # Hlthcr apps (composer packages wai-blue/hubleto-hlthcr-*), in the order of the work in the sidebar.
+  Hubleto\App\External\WaiBlue\HlthcrCore: { sidebarOrder: 309 }
+  Hubleto\App\External\WaiBlue\HlthcrClients: { sidebarOrder: 308 }
+  Hubleto\App\External\WaiBlue\HlthcrBranches: { sidebarOrder: 301 }
+  Hubleto\App\External\WaiBlue\HlthcrEmployees: { sidebarOrder: 302 }
+  Hubleto\App\External\WaiBlue\HlthcrMedicalExams: { sidebarOrder: 303 }
+  Hubleto\App\External\WaiBlue\HlthcrAudits: { sidebarOrder: 304 }
+  Hubleto\App\External\WaiBlue\HlthcrDocuments: { sidebarOrder: 305 }
+  Hubleto\App\External\WaiBlue\HlthcrEvents: { sidebarOrder: 306 }
+
+extraConfigEnv:
+  appTitle: Hlthcr
+  # Hubleto 2 cannot translate the sidebar group titles through files, so they are set here.
+  sidebarGroups:
+    crm: { color: '#7a23dc', title: 'CRM', icon: 'fas fa-id-card-clip' }
+    marketing: { color: '#c6aa39', title: 'Marketing', icon: 'fas fa-bullseye' }
+    sales: { color: '#f50ab9', title: 'Predaj', icon: 'fas fa-users-viewfinder' }
+    productivity: { color: '#20689f', title: 'Produktivita', icon: 'fas fa-diagram-project' }
+    human-resources: { color: '#759f20', title: 'Ľudské zdroje', icon: 'fas fa-helmet' }
+    finance: { color: '#ce4715ff', title: 'Financie', icon: 'fas fa-credit-card' }
+    custom: { color: '#888888', title: 'Pracovná zdravotná služba', icon: 'fas fa-puzzle-piece' }
+    maintenance: { color: '#c0c90e', title: 'Údržba', icon: 'fas fa-cog' }
+    help: { color: '#005a16ff', title: 'Pomoc', icon: 'fas fa-life-ring' }

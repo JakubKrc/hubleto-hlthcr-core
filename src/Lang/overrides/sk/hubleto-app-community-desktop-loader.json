@@ -1,0 +1,11 @@
+{
+    "manifest": {
+        "Custom": "Pracovná zdravotná služba"
+    },
+    "Controllers\\Desktop": {
+        "Custom": "Pracovná zdravotná služba"
+    },
+    "Loader": {
+        "Custom": "Pracovná zdravotná služba"
+    }
+}
