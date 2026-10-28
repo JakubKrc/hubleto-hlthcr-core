@@ -6,7 +6,7 @@
 
 ### Hlthcr packages, merged into the project's composer.json by "php hubleto prepare-composer".
 ### Run it only once: a second run doubles the entries and breaks composer.json.
-### "no-api" makes composer clone with plain git, so your git login (HTTPS or SSH key) is enough.
+### "no-api" makes composer clone with plain git, without GitHub API calls (no token, no API rate limit).
 composer:
   repositories:
     wai-blue/hubleto-hlthcr-core: { type: vcs, url: 'https://github.com/JakubKrc/hubleto-hlthcr-core', no-api: true }

@@ -1,7 +1,6 @@
 # Installing the Hlthcr CRM (Hubleto 2)
 
-Needs PHP 8.2 or newer, composer, node and npm, a MySQL or MariaDB database, and read access to the Hlthcr
-repositories on GitHub (an SSH key in your GitHub account, or a git login over HTTPS).
+Needs PHP 8.2 or newer, composer, node and npm, and a MySQL or MariaDB database. The Hlthcr repositories are public.
 
 Everything Hlthcr needs is in one file, `hlthcr.example.yaml` in this folder: the Hlthcr packages for composer,
 and the apps and settings for `php hubleto init`.
@@ -83,4 +82,4 @@ composer require wai-blue/hubleto-hlthcr-core:dev-main wai-blue/hubleto-hlthcr-c
 php hubleto init hlthcr.yaml
 ```
 
-`no-api` makes composer clone with plain git, so it uses your git login and needs no GitHub token of its own.
+`no-api` makes composer clone with plain git, so it needs no GitHub token and avoids the GitHub API rate limit.
