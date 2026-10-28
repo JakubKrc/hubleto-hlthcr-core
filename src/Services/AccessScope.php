@@ -12,8 +12,9 @@ class AccessScope extends \Hubleto\Erp\Core
 {
   const SEES_ALL = 'all';
   const SEES_OWNED = 'owned';
-  const SEES_OWNED_AND_MANAGED = 'owned-and-managed';
   const SEES_NOTHING = 'nothing';
+
+  const BRANCHES_APP = 'Hubleto\\App\\External\\WaiBlue\\HlthcrBranches';
 
   private function roles(): Roles
   {
@@ -22,7 +23,7 @@ class AccessScope extends \Hubleto\Erp\Core
 
   /**
    * The Hlthcr role decides, whatever the user type (both legacy apps): hygienists see own clients, nurses and medical
-   * staff all. External users see nothing; users with no Hlthcr role follow Hubleto's rule for Customers.
+   * staff all. External users see nothing; users with no Hlthcr role see by their user type, like in Hubleto.
    */
   public function getVisibilityOfActiveUser(): string
   {
@@ -34,13 +35,10 @@ class AccessScope extends \Hubleto\Erp\Core
 
     $userType = $this->authProvider()->getUserType();
 
-    if ($userType == User::TYPE_EMPLOYEE || $userType == User::TYPE_ASSISTANT) {
-      return self::SEES_OWNED;
-    }
-
-    if ($userType == User::TYPE_MANAGER || $userType == User::TYPE_CHIEF_OFFICER) {
-      return self::SEES_OWNED_AND_MANAGED;
-    }
+    // Hubleto also shows managers the clients they manage; the client's manager is not used here (hidden, no legacy use).
+    $seesOwnedOnly = $userType == User::TYPE_EMPLOYEE || $userType == User::TYPE_ASSISTANT
+      || $userType == User::TYPE_MANAGER || $userType == User::TYPE_CHIEF_OFFICER;
+    if ($seesOwnedOnly) return self::SEES_OWNED;
 
     return self::SEES_ALL;
   }
@@ -62,10 +60,32 @@ class AccessScope extends \Hubleto\Erp\Core
 
     $idUser = $this->authProvider()->getUserId();
 
-    return $query->whereIn($customerIdColumn, function ($visibleCustomers) use ($idUser, $visibility) {
-      $visibleCustomers->select('id')->from('customers')->where('id_owner', $idUser);
-      if ($visibility == self::SEES_OWNED_AND_MANAGED) {
-        $visibleCustomers->orWhere('id_manager', $idUser);
+    return $query->whereIn($customerIdColumn, function ($ownedCustomers) use ($idUser) {
+      $ownedCustomers->select('id')->from('customers')->where('id_owner', $idUser);
+    });
+  }
+
+  /**
+   * Clients a user may choose in dropdowns and sees as the text of linked records: the visible ones, plus the client
+   * of a branch the user owns (a branch can have another hygienist than its client, as in one legacy app).
+   */
+  public function restrictToLinkableCustomers(mixed $query, string $customerIdColumn): mixed
+  {
+    $visibility = $this->getVisibilityOfActiveUser();
+    if ($visibility == self::SEES_ALL) return $query;
+    if ($visibility == self::SEES_NOTHING) return $query->whereRaw('1 = 0');
+
+    $idUser = $this->authProvider()->getUserId();
+    $hasBranches = $this->appManager()->isAppInstalled(self::BRANCHES_APP);
+
+    return $query->where(function ($linkableCustomers) use ($customerIdColumn, $idUser, $hasBranches) {
+      $linkableCustomers->whereIn($customerIdColumn, function ($ownedCustomers) use ($idUser) {
+        $ownedCustomers->select('id')->from('customers')->where('id_owner', $idUser);
+      });
+      if ($hasBranches) {
+        $linkableCustomers->orWhereIn($customerIdColumn, function ($customersOfOwnedBranches) use ($idUser) {
+          $customersOfOwnedBranches->select('id_customer')->from('hlthcr_branches')->where('id_owner', $idUser);
+        });
       }
     });
   }

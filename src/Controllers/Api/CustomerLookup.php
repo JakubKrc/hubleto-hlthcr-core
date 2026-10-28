@@ -20,7 +20,7 @@ class CustomerLookup extends \Hubleto\Erp\Controllers\ApiController
     $mCustomer = $this->getModel(Customer::class);
 
     $query = $mCustomer->record->prepareLookupQuery($search);
-    $query = $this->getService(AccessScope::class)->restrictToVisibleCustomers($query, 'customers.id');
+    $query = $this->getService(AccessScope::class)->restrictToLinkableCustomers($query, 'customers.id');
     if (method_exists($mCustomer->record, 'restrictToOfferedRecords')) {
       $query = $mCustomer->record->restrictToOfferedRecords($query);
     }

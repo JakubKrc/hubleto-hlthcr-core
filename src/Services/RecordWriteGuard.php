@@ -90,7 +90,7 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     $record = $this->router()->urlParamAsArray('record');
     $idRecord = (int) ($record['id'] ?? 0);
     if ($idRecord > 0 && !$this->isRecordVisible($modelClass, $idRecord)) return false;
-    if (!$this->areParentsVisible($record)) return false;
+    if (!$this->areParentsVisible($modelClass, $record)) return false;
     return $this->areSavedRelationsAllowed($modelClass, $idRecord, $record);
   }
 
@@ -134,15 +134,35 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     return $model->record->prepareReadQuery()->where($model->table . '.id', $idRecord)->exists();
   }
 
-  private function areParentsVisible(array $record): bool
+  private function areParentsVisible(string $modelClass, array $record): bool
   {
     foreach (self::PARENT_MODELS_BY_COLUMN as $parentColumn => $parentModelClass) {
       $idParent = (int) ($record[$parentColumn] ?? 0);
       if ($idParent <= 0) continue;
       if (!class_exists($parentModelClass)) continue;
+      if ($parentColumn == 'id_customer' && $this->isClientGivenByVisibleBranch($modelClass, $record)) continue;
       if (!$this->isRecordVisible($parentModelClass, $idParent)) return false;
     }
     return true;
+  }
+
+  // A branch can have another hygienist than its client (one legacy app): the branch owner may save the branch
+  // and the records under it, as long as the client stays the client of that branch.
+  private function isClientGivenByVisibleBranch(string $modelClass, array $record): bool
+  {
+    $branchModelClass = self::PARENT_MODELS_BY_COLUMN['id_branch'];
+    if (!class_exists($branchModelClass)) return false;
+
+    if ($modelClass == $branchModelClass) {
+      $idBranch = (int) ($record['id'] ?? 0);
+    } else {
+      $idBranch = (int) ($record['id_branch'] ?? 0);
+    }
+    if (!$this->isRecordVisible($branchModelClass, $idBranch)) return false;
+
+    $branch = $this->getModel($branchModelClass)->record->where('id', $idBranch)->first();
+    $idCustomer = (int) ($record['id_customer'] ?? 0);
+    return $branch && (int) $branch->id_customer == $idCustomer;
   }
 
   // Related rows that already exist must belong to the saved record (no taking over another record's rows).
