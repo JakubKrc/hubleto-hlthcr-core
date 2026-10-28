@@ -16,8 +16,10 @@ class Hazard extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   const TYPE_PROFESSIONAL_ACTIVITY = 3;
   const TYPE_EXAMINATION = 4;
 
-  // Work categories of a factor on a job position; 0 means "not in this category".
-  const CATEGORIES = [1, 2, 3, 4];
+  // Level of a hazard on a job position or an exam: a work factor has a category 1-4, the other types only "yes".
+  const LOWEST_CATEGORY = 1;
+  const HIGHEST_CATEGORY = 4;
+  const LEVEL_YES = 1;
 
   public string $table = 'hlthcr_hazards';
   public string $recordManagerClass = RecordManagers\Hazard::class;
@@ -38,6 +40,21 @@ class Hazard extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   public static function typeUsesCategories(int $type): bool
   {
     return $type == self::TYPE_FACTOR;
+  }
+
+  public static function isValidLevel(int $type, int $level): bool
+  {
+    if (!self::typeUsesCategories($type)) return $level == self::LEVEL_YES;
+    return $level >= self::LOWEST_CATEGORY && $level <= self::HIGHEST_CATEGORY;
+  }
+
+  // The level an editor stores for a submitted value; 0 means the hazard is not present (no row).
+  public static function levelToStore(int $type, int $submittedLevel): int
+  {
+    if ($submittedLevel <= 0) return 0;
+    if (!self::typeUsesCategories($type)) return self::LEVEL_YES;
+    if ($submittedLevel > self::HIGHEST_CATEGORY) return self::HIGHEST_CATEGORY;
+    return $submittedLevel;
   }
 
   public function describeColumns(): array
