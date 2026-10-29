@@ -11,6 +11,7 @@ use Hubleto\App\Community\Dashboards\Models\Dashboard as CommunityDashboard;
  */
 class Dashboard extends CommunityDashboard
 {
+  use \Hubleto\App\External\WaiBlue\HlthcrCore\Models\Traits\BehavesAsCommunityModel;
   public static function register(): void
   {
     \Hubleto\Framework\DependencyInjection::setServiceProvider(CommunityDashboard::class, self::class);
@@ -20,14 +21,7 @@ class Dashboard extends CommunityDashboard
   {
     parent::__construct();
 
-    // Behave as the community model everywhere else: same migrations, config keys and translations.
-    $communityModel = new \ReflectionClass(CommunityDashboard::class);
-    $this->fullName = $communityModel->getName();
-    $this->shortName = $communityModel->getShortName();
-    $this->namespace = $communityModel->getNamespaceName();
-    $this->srcFolder = pathinfo((string) $communityModel->getFileName(), PATHINFO_DIRNAME);
-    $this->translationContext = 'hubleto-app-community-dashboards-loader';
-    $this->translationContextInner = 'Models\\Dashboard';
+    $this->behaveAsCommunityModel(CommunityDashboard::class, 'hubleto-app-community-dashboards-loader');
   }
 
   public function getDefaultDashboard(): mixed

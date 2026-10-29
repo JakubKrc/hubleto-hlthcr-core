@@ -13,16 +13,15 @@ class Recipients extends \Hubleto\Erp\Core
   // Active users with the given Hlthcr role.
   public function getUserIdsWithRole(string $roleKey): array
   {
-    $idRole = $this->getService(Roles::class)->getRoleId($roleKey);
-    if ($idRole <= 0) return [];
+    /** @var Roles */
+    $roles = $this->getService(Roles::class);
+    if ($roles->getRoleId($roleKey) <= 0) return [];
 
     /** @var User */
     $mUser = $this->getModel(User::class);
     $userIds = $mUser->record
       ->where('is_active', 1)
-      ->whereIn('id', function ($usersWithRole) use ($idRole) {
-        $usersWithRole->select('id_user')->from('user_has_roles')->where('id_role', $idRole);
-      })
+      ->whereIn('id', $roles->userIdsWithRole($roleKey))
       ->pluck('id')
     ;
 

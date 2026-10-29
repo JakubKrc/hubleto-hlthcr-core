@@ -8,6 +8,16 @@ namespace Hubleto\App\External\WaiBlue\HlthcrCore;
 abstract class HlthcrApp extends \Hubleto\Erp\App
 {
   /**
+   * Each Hlthcr app registers the Hlthcr translator as soon as it is created: apps start in alphabetical order,
+   * and "php hubleto init" installs an app before its init() runs.
+   */
+  public function __construct()
+  {
+    parent::__construct();
+    Services\Translator::register();
+  }
+
+  /**
    * Hubleto builds external apps into js/external/<Vendor>/<App>.js but does not load them yet.
    */
   public function getJavascriptAssetsUrls(): array

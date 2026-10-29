@@ -23,7 +23,7 @@ class Translator extends \Hubleto\Framework\Services\Translator
 
   /**
    * After this call the DI container returns this translator instead of the core one.
-   * Apps are initialized alphabetically, so each Hlthcr app calls it, not only HlthcrCore.
+   * Called by every Hlthcr app when it is created (HlthcrApp::__construct()), since apps start alphabetically.
    */
   public static function register(): void
   {

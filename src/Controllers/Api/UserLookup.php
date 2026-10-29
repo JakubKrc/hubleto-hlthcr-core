@@ -31,18 +31,16 @@ class UserLookup extends \Hubleto\Erp\Controllers\ApiController
 
     /** @var Roles */
     $roles = $this->getService(Roles::class);
-    $idRole = $roles->getRoleId($roleKey);
+    $userIdsWithRole = $roles->userIdsWithRole($roleKey);
 
     /** @var User */
     $mUser = $this->getModel(User::class);
     $query = $mUser->record->prepareLookupQuery($search);
-    $query = $query->where(function ($offeredUsers) use ($idRole, $idChosenUser) {
-      $offeredUsers->where(function ($usersWithRole) use ($idRole) {
+    $query = $query->where(function ($offeredUsers) use ($userIdsWithRole, $idChosenUser) {
+      $offeredUsers->where(function ($usersWithRole) use ($userIdsWithRole) {
         $usersWithRole->where('users.is_active', 1);
         $usersWithRole->where('users.type', '<>', User::TYPE_EXTERNAL);
-        $usersWithRole->whereIn('users.id', function ($userIdsWithRole) use ($idRole) {
-          $userIdsWithRole->select('id_user')->from('user_has_roles')->where('id_role', $idRole);
-        });
+        $usersWithRole->whereIn('users.id', $userIdsWithRole);
       });
       if ($idChosenUser > 0) {
         $offeredUsers->orWhere('users.id', $idChosenUser);

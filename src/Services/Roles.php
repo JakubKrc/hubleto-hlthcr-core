@@ -72,6 +72,15 @@ class Roles extends \Hubleto\Erp\Core
     return $this->config()->getAsInteger(self::ROLE_IDS_CONFIG_PATH . $roleKey);
   }
 
+  // For whereIn(): the ids of the users who have the role.
+  public function userIdsWithRole(string $roleKey): \Closure
+  {
+    $idRole = $this->getRoleId($roleKey);
+    return function ($userIdsWithRole) use ($idRole) {
+      $userIdsWithRole->select('id_user')->from('user_has_roles')->where('id_role', $idRole);
+    };
+  }
+
   public function activeUserHasRole(string $roleKey): bool
   {
     $idRole = $this->getRoleId($roleKey);

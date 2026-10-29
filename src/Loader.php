@@ -13,13 +13,10 @@ class Loader extends HlthcrApp
     HubletoOverrides\GuardedRenderer::addRouteGuard(Services\RecordWriteGuard::class);
     HubletoOverrides\HomePage::register();
     HubletoOverrides\Search::register();
-    // Before any app starts, so Hubleto's apps translate their names with the Hlthcr overrides too.
-    Services\Translator::register();
   }
 
   public function init(): void
   {
-    Services\Translator::register();
     parent::init();
 
     header_register_callback([Services\ResponseHeaders::class, 'keepEachCookieOnce']);
@@ -58,9 +55,6 @@ class Loader extends HlthcrApp
 
   public function installApp(int $round): void
   {
-    // During "php hubleto init" the app is installed before its init() runs.
-    Services\Translator::register();
-
     if ($round == 1) {
       $this->getModel(Models\Hazard::class)->upgradeSchema();
       $this->getModel(Models\Clinic::class)->upgradeSchema();
