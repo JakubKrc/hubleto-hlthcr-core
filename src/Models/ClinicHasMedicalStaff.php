@@ -41,6 +41,8 @@ class ClinicHasMedicalStaff extends \Hubleto\App\External\WaiBlue\HlthcrCore\Mod
     $description->ui['addButtonText'] = $this->translate('Add medical staff user');
     $description->show(['header', 'fulltextSearch', 'columnSearch', 'moreActionsButton']);
     $description->hide(['footer']);
+    // In the clinic's tab the clinic is known, so its column is left out (both legacy apps).
+    if ($this->router()->urlParamAsInteger('idClinic') > 0) $description->hideColumns(['id_clinic']);
     return $description;
   }
 
