@@ -1,8 +1,8 @@
 {
     "manifest": {
         "Code lists": "Číselníky",
-        "Shared code lists for occupational health (hazards, clinics, cars) and shared services of the Hlthcr apps.": "Spoločné číselníky pracovnej zdravotnej služby (riziká, ambulancie, autá) a spoločné služby aplikácií Healthcare.",
-        "Hazards (categorisation items)": "Položky vo výslednej kategorizácii",
+        "Shared code lists for occupational health (hazards, clinics, cars) and shared services of the Hlthcr apps.": "Spoločné číselníky pracovnej zdravotnej služby (riziká, ambulancie, autá) a spoločné služby aplikácií Hlthcr.",
+        "Hazards (categorisation items)": "Riziká (položky kategorizácie)",
         "Hazards": "Riziká",
         "Clinics": "Ambulancie",
         "Cars": "Autá",
@@ -11,7 +11,7 @@
     },
     "Models\\Hazard": {
         "Name": "Názov",
-        "Add hazard": "Pridať položku",
+        "Add hazard": "Pridať riziko",
         "Work factor": "Faktor práce",
         "Special regulation": "Osobitný predpis",
         "Professional activity": "Odborná činnosť",
@@ -23,7 +23,7 @@
         "Exam interval, category 2": "Interval LPP, kategória 2",
         "Exam interval, category 3": "Interval LPP, kategória 3",
         "Exam interval, category 4": "Interval LPP, kategória 4",
-        "A hazard of this name already exists.": "Položka s týmto názvom už existuje."
+        "A hazard of this name already exists.": "Riziko s týmto názvom už existuje."
     },
     "Models\\Clinic": {
         "Name": "Názov",
@@ -59,7 +59,7 @@
         "Clinic staff. Sees medical exams of own clinic only.": "Personál ambulancie. Vidí len prehliadky svojej ambulancie."
     },
     "Components\\FormHazard": {
-        "Hazard": "Položka kategorizácie",
+        "Hazard": "Riziko",
         "Exam intervals": "Intervaly LPP"
     },
     "Components\\FormClinic": {
