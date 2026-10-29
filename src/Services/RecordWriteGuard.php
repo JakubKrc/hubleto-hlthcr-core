@@ -15,17 +15,21 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
 {
   const REFUSED_ROUTE = 'hlthcr/api/refused';
 
-  // Code lists, the clinic staff, event attendees and workflows: only administrators and managers change them.
+  // Code lists, event attendees and workflows: only administrators and managers change them.
   const MODELS_FOR_ADMINISTRATORS_AND_MANAGERS = [
     'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Hazard',
-    'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Clinic',
-    'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\ClinicHasMedicalStaff',
-    'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Car',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrBranches\\Models\\BranchType',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrClients\\Models\\ClientType',
     'Hubleto\\App\\External\\WaiBlue\\HlthcrEvents\\Models\\EventHasUser',
     'Hubleto\\App\\Community\\Workflow\\Models\\Workflow',
     'Hubleto\\App\\Community\\Workflow\\Models\\WorkflowStep',
+  ];
+
+  // Clinics, their staff and cars: managers and these roles change them (both legacy apps).
+  const OTHER_ROLES_CHANGING_MODEL = [
+    'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Clinic' => [Roles::NURSE],
+    'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\ClinicHasMedicalStaff' => [Roles::NURSE],
+    'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Car' => [Roles::NURSE, Roles::HYGIENIST],
   ];
 
   // Medical staff change only exams (both legacy apps show them clients and branches read-only).
@@ -110,11 +114,26 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     $isAdministrationModel = in_array($modelClass, self::MODELS_FOR_ADMINISTRATORS_AND_MANAGERS);
     if ($isAdministrationModel && !$isManager) return false;
 
+    $otherRolesChangingModel = self::OTHER_ROLES_CHANGING_MODEL[$modelClass] ?? null;
+    if ($otherRolesChangingModel !== null && !$isManager) {
+      if (!$this->activeUserHasOneOfRoles($otherRolesChangingModel)) return false;
+    }
+
     $isOnlyMedicalStaff = $roles->activeUserHasRole(Roles::MEDICAL_STAFF) && !$isManager
       && !$roles->activeUserHasRole(Roles::NURSE) && !$roles->activeUserHasRole(Roles::HYGIENIST);
     if ($isOnlyMedicalStaff && !in_array($appNamespace, self::APPS_MEDICAL_STAFF_MAY_CHANGE)) return false;
 
     return true;
+  }
+
+  private function activeUserHasOneOfRoles(array $roleKeys): bool
+  {
+    /** @var Roles */
+    $roles = $this->getService(Roles::class);
+    foreach ($roleKeys as $roleKey) {
+      if ($roles->activeUserHasRole($roleKey)) return true;
+    }
+    return false;
   }
 
   // "Hubleto\App\External\WaiBlue\HlthcrBranches\Models\Branch" belongs to "Hubleto\App\External\WaiBlue\HlthcrBranches".
