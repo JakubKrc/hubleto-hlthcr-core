@@ -17,7 +17,7 @@
       <hblreact-dashboards-dashboard
         int:id-dashboard='{{ defaultDashboard.id }}'
         string:redirect-url='{{ config.projectUrl }}'
-        json:panels='{{ defaultDashboard.PANELS|json_encode|raw }}'
+        json:panels='{{ defaultDashboard.PANELS|json_encode }}'
         bool:show-add-new-panel-button='true'
       ></hblreact-dashboards-dashboard>
     </div>

@@ -17,6 +17,14 @@ abstract class HlthcrApp extends \Hubleto\Erp\App
     Services\Translator::register();
   }
 
+  // Whether the signed-in user may open the app, for buttons and links to it.
+  public function isAppPermittedForActiveUser(string $appNamespace): bool
+  {
+    $app = $this->appManager()->getApp($appNamespace);
+    if ($app === null) return false;
+    return $this->permissionsManager()->isAppPermittedForActiveUser($app);
+  }
+
   /**
    * Hubleto builds external apps into js/external/<Vendor>/<App>.js but does not load them yet.
    */
