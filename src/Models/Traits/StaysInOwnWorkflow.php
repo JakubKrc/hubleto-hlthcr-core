@@ -44,6 +44,14 @@ trait StaysInOwnWorkflow
     }
   }
 
+  // A new record always starts in the first step of its group's workflow (set in onAfterCreate), whatever a save sends.
+  protected function dropSentWorkflow(array $record): array
+  {
+    unset($record['id_workflow']);
+    unset($record['id_workflow_step']);
+    return $record;
+  }
+
   // For a record that gets its first step without a model update: Hubleto logs the history only on updates.
   protected function logFirstWorkflowStep(array $savedRecord): void
   {
