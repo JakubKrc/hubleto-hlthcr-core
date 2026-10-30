@@ -25,6 +25,12 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     'Hubleto\\App\\Community\\Workflow\\Models\\WorkflowStep',
   ];
 
+  // State history is written by Hubleto itself, and automats change any record: no Hlthcr role edits them.
+  const MODELS_FOR_ADMINISTRATORS_ONLY = [
+    'Hubleto\\App\\Community\\Workflow\\Models\\WorkflowHistory',
+    'Hubleto\\App\\Community\\Workflow\\Models\\Automat',
+  ];
+
   // Clinics, their staff and cars: managers and these roles change them (both legacy apps).
   const OTHER_ROLES_CHANGING_MODEL = [
     'Hubleto\\App\\External\\WaiBlue\\HlthcrCore\\Models\\Clinic' => [Roles::NURSE],
@@ -110,6 +116,9 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     /** @var Roles */
     $roles = $this->getService(Roles::class);
     $isManager = $roles->activeUserHasRole(Roles::MANAGER);
+
+    // Administrators never get here (getRouteToRender, mayActiveUserChangeModel).
+    if (in_array($modelClass, self::MODELS_FOR_ADMINISTRATORS_ONLY)) return false;
 
     $isAdministrationModel = in_array($modelClass, self::MODELS_FOR_ADMINISTRATORS_AND_MANAGERS);
     if ($isAdministrationModel && !$isManager) return false;
