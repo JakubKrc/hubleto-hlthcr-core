@@ -25,7 +25,7 @@ class Hazard extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   public string $table = 'hlthcr_hazards';
   public string $recordManagerClass = RecordManagers\Hazard::class;
   public ?string $lookupSqlValue = '{%TABLE%}.name';
-  public ?string $lookupUrlDetail = 'hlthcr/hazards/{%ID%}';
+  public ?string $lookupUrlDetail = 'hlthcr-core/hazards/{%ID%}';
   // Grouped by type in dropdowns, as similar names exist in several types.
   public string $lookupOrderBy = '{%TABLE%}.type, {%TABLE%}.name';
 

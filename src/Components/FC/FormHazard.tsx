@@ -11,7 +11,7 @@ const FormHazard = (props: FormProps) => <Form
   componentName={componentName}
   parentApp={parentApp}
   model={parentApp + '/Models/Hazard'}
-  urlSlug='hlthcr/hazards'
+  urlSlug='hlthcr-core/hazards'
   title={{field: 'name', sub: T.translate('Hazard')}}
   tabs={{
     default: {title: <b>{T.translate('Hazard')}</b>, content: () => <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>

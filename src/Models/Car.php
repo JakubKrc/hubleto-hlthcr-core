@@ -9,7 +9,7 @@ class Car extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   public string $table = 'hlthcr_cars';
   public string $recordManagerClass = RecordManagers\Car::class;
   public ?string $lookupSqlValue = 'concat({%TABLE%}.name, " (", {%TABLE%}.license_plate, ")")';
-  public ?string $lookupUrlDetail = 'hlthcr/cars/{%ID%}';
+  public ?string $lookupUrlDetail = 'hlthcr-core/cars/{%ID%}';
 
   public function describeColumns(): array
   {

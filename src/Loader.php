@@ -23,30 +23,30 @@ class Loader extends HlthcrApp
     HubletoOverrides\Dashboard::register();
 
     $this->router()->get([
-      '/^hlthcr\/?$/' => Controllers\Home::class,
-      '/^hlthcr\/settings\/?$/' => Controllers\Settings::class,
-      '/^hlthcr\/api\/customer-lookup\/?$/' => Controllers\Api\CustomerLookup::class,
-      '/^hlthcr\/api\/user-lookup\/?$/' => Controllers\Api\UserLookup::class,
-      '/^hlthcr\/api\/refused\/?$/' => Controllers\Api\Refused::class,
+      '/^hlthcr-core\/?$/' => Controllers\Home::class,
+      '/^hlthcr-core\/settings\/?$/' => Controllers\Settings::class,
+      '/^hlthcr-core\/api\/customer-lookup\/?$/' => Controllers\Api\CustomerLookup::class,
+      '/^hlthcr-core\/api\/user-lookup\/?$/' => Controllers\Api\UserLookup::class,
+      '/^hlthcr-core\/api\/refused\/?$/' => Controllers\Api\Refused::class,
     ]);
     // Replaces Hubleto's lookup endpoint (same route), see HubletoOverrides/RecordLookup.
     $this->router()->get(['/^api\/record\/lookup\/?$/' => HubletoOverrides\RecordLookup::class]);
-    $this->router()->crud('hlthcr/hazards', Controllers\Hazards::class);
-    $this->router()->crud('hlthcr/clinics', Controllers\Clinics::class);
-    $this->router()->crud('hlthcr/clinic-has-medical-staff', Controllers\ClinicHasMedicalStaff::class);
-    $this->router()->crud('hlthcr/cars', Controllers\Cars::class);
+    $this->router()->crud('hlthcr-core/hazards', Controllers\Hazards::class);
+    $this->router()->crud('hlthcr-core/clinics', Controllers\Clinics::class);
+    $this->router()->crud('hlthcr-core/clinic-has-medical-staff', Controllers\ClinicHasMedicalStaff::class);
+    $this->router()->crud('hlthcr-core/cars', Controllers\Cars::class);
 
     /** @var \Hubleto\App\Community\Settings\Loader $settingsApp */
     $settingsApp = $this->appManager()->getApp(\Hubleto\App\Community\Settings\Loader::class);
     $settingsApp->addSetting($this, [
       'title' => $this->translate('Hazards (categorisation items)'),
       'icon' => 'fas fa-triangle-exclamation',
-      'url' => 'hlthcr/hazards',
+      'url' => 'hlthcr-core/hazards',
     ]);
     $settingsApp->addSetting($this, [
       'title' => $this->translate('Clinics'),
       'icon' => 'fas fa-house-medical',
-      'url' => 'hlthcr/clinics',
+      'url' => 'hlthcr-core/clinics',
     ]);
 
     // Users who get a role also get the apps and the home dashboard panels of that role.
@@ -101,7 +101,7 @@ class Loader extends HlthcrApp
       $results[] = [
         'id' => $clinic['id'],
         'label' => $clinic['name'],
-        'url' => 'hlthcr/clinics/' . $clinic['id'],
+        'url' => 'hlthcr-core/clinics/' . $clinic['id'],
         'description' => trim(($clinic['street'] ?? '') . ' ' . ($clinic['city'] ?? '')),
       ];
     }
@@ -113,10 +113,10 @@ class Loader extends HlthcrApp
     return '
       ' . $this->secondSidebarTitle() . '
       <div class="app-sidebar-buttons">
-        ' . $this->secondSidebarButton('hlthcr/hazards', 'fas fa-triangle-exclamation', $this->translate('Hazards')) . '
-        ' . $this->secondSidebarButton('hlthcr/clinics', 'fas fa-house-medical', $this->translate('Clinics')) . '
-        ' . $this->secondSidebarButton('hlthcr/cars', 'fas fa-car', $this->translate('Cars')) . '
-        ' . $this->secondSidebarButton('hlthcr/settings', 'fas fa-cog', $this->translate('Settings')) . '
+        ' . $this->secondSidebarButton('hlthcr-core/hazards', 'fas fa-triangle-exclamation', $this->translate('Hazards')) . '
+        ' . $this->secondSidebarButton('hlthcr-core/clinics', 'fas fa-house-medical', $this->translate('Clinics')) . '
+        ' . $this->secondSidebarButton('hlthcr-core/cars', 'fas fa-car', $this->translate('Cars')) . '
+        ' . $this->secondSidebarButton('hlthcr-core/settings', 'fas fa-cog', $this->translate('Settings')) . '
       </div>
     ';
   }

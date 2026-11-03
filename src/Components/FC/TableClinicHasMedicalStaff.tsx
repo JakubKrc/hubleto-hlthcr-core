@@ -15,7 +15,7 @@ const TableClinicHasMedicalStaff = (props: TableClinicHasMedicalStaffProps) => {
     componentName={componentName}
     parentApp={parentApp}
     model={parentApp + '/Models/ClinicHasMedicalStaff'}
-    baseUrlSlug='hlthcr/clinic-has-medical-staff'
+    baseUrlSlug='hlthcr-core/clinic-has-medical-staff'
     endpointParams={{idClinic: idClinic}}
     formDefaultValues={idClinic > 0 ? {id_clinic: idClinic} : {}}
     formModalProps={{type: 'right'}}

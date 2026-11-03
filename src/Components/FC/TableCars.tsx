@@ -9,7 +9,7 @@ const TableCars = (props: TableProps) => <Table
   componentName={componentName}
   parentApp={parentApp}
   model={parentApp + '/Models/Car'}
-  baseUrlSlug='hlthcr/cars'
+  baseUrlSlug='hlthcr-core/cars'
   formModalProps={{type: 'right wide'}}
   renderForm={(table: TableMeta) => <FormCar {...table.getDefaultFormProps()} />}
   {...props}

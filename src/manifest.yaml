@@ -1,7 +1,7 @@
 namespace: Hubleto\App\External\WaiBlue\HlthcrCore
 appType: external
 sidebarGroup: custom
-rootUrlSlug: hlthcr
+rootUrlSlug: hlthcr-core
 name: Code lists
 icon: fas fa-list-check
 author:

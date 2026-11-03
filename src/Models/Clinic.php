@@ -11,7 +11,7 @@ class Clinic extends \Hubleto\App\External\WaiBlue\HlthcrCore\Models\HlthcrModel
   public string $table = 'hlthcr_clinics';
   public string $recordManagerClass = RecordManagers\Clinic::class;
   public ?string $lookupSqlValue = 'concat({%TABLE%}.name, ifnull(concat(", ", {%TABLE%}.city), ""))';
-  public ?string $lookupUrlDetail = 'hlthcr/clinics/{%ID%}';
+  public ?string $lookupUrlDetail = 'hlthcr-core/clinics/{%ID%}';
 
   public function describeColumns(): array
   {

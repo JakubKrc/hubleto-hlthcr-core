@@ -22,7 +22,7 @@ const FormClinicHasMedicalStaff = (props: FormProps) => <Form
   componentName={componentName}
   parentApp={parentApp}
   model={parentApp + '/Models/ClinicHasMedicalStaff'}
-  urlSlug='hlthcr/clinic-has-medical-staff'
+  urlSlug='hlthcr-core/clinic-has-medical-staff'
   title={{ sub: T.translate('Medical staff of the clinic')}}
   tabs={{default: {content: () => <TabDefault />}}}
   {...props}

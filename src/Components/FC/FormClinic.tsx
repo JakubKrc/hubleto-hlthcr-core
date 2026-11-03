@@ -20,7 +20,7 @@ const FormClinic = (props: FormProps) => <Form
   componentName={componentName}
   parentApp={parentApp}
   model={parentApp + '/Models/Clinic'}
-  urlSlug='hlthcr/clinics'
+  urlSlug='hlthcr-core/clinics'
   title={{field: 'name', sub: T.translate('Clinic')}}
   tabs={{
     default: {title: <b>{T.translate('Clinic')}</b>, content: () => <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>

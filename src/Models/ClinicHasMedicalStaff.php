@@ -16,7 +16,7 @@ class ClinicHasMedicalStaff extends \Hubleto\App\External\WaiBlue\HlthcrCore\Mod
   public string $table = 'hlthcr_clinic_has_medical_staff';
   public string $recordManagerClass = RecordManagers\ClinicHasMedicalStaff::class;
   public ?string $lookupSqlValue = '(select concat(first_name, " ", last_name) from users where users.id = {%TABLE%}.id_user)';
-  public ?string $lookupUrlDetail = 'hlthcr/clinic-has-medical-staff/{%ID%}';
+  public ?string $lookupUrlDetail = 'hlthcr-core/clinic-has-medical-staff/{%ID%}';
 
   public array $relations = [
     'CLINIC' => [ self::BELONGS_TO, Clinic::class, 'id_clinic', 'id' ],

@@ -12,7 +12,7 @@ use Hubleto\App\External\WaiBlue\HlthcrCore\Services\DropdownRecords;
  */
 class CustomerLookup extends \Hubleto\Erp\Controllers\ApiController
 {
-  const ENDPOINT = 'hlthcr/api/customer-lookup';
+  const ENDPOINT = 'hlthcr-core/api/customer-lookup';
 
   public function renderJson(): array
   {

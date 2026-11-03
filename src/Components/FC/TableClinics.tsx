@@ -9,7 +9,7 @@ const TableClinics = (props: TableProps) => <Table
   componentName={componentName}
   parentApp={parentApp}
   model={parentApp + '/Models/Clinic'}
-  baseUrlSlug='hlthcr/clinics'
+  baseUrlSlug='hlthcr-core/clinics'
   formModalProps={{type: 'right wide'}}
   renderForm={(table: TableMeta) => <FormClinic {...table.getDefaultFormProps()} />}
   {...props}

@@ -13,7 +13,7 @@ use Hubleto\App\External\WaiBlue\HlthcrCore\Services\Roles;
  */
 class UserLookup extends \Hubleto\Erp\Controllers\ApiController
 {
-  const ENDPOINT = 'hlthcr/api/user-lookup';
+  const ENDPOINT = 'hlthcr-core/api/user-lookup';
 
   // Endpoint of one user column, e.g. UserLookup::endpointFor(Roles::HYGIENIST, 'id_owner').
   public static function endpointFor(string $roleKey, string $formColumn): string

@@ -13,7 +13,7 @@ use Hubleto\Framework\Controllers\Api\Record\SaveJunction;
  */
 class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
 {
-  const REFUSED_ROUTE = 'hlthcr/api/refused';
+  const REFUSED_ROUTE = 'hlthcr-core/api/refused';
 
   // Code lists, event attendees and workflows: only administrators and managers change them.
   const MODELS_FOR_ADMINISTRATORS_AND_MANAGERS = [

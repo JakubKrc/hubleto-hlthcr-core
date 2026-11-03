@@ -1,8 +1,0 @@
-{
-    "manifest": {
-        "Documents": "Šablóny dokumentov"
-    },
-    "Controllers\\Documents": {
-        "Documents": "Šablóny dokumentov"
-    }
-}
