@@ -55,6 +55,12 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
     'id_audit' => 'Hubleto\\App\\External\\WaiBlue\\HlthcrAudits\\Models\\Audit',
   ];
 
+  // Hubleto's documents are the work documents of HlthcrDocuments: they are changed with that app, not with Hubleto's
+  // Documents app (its templates stay for administrators).
+  const APPS_OF_COMMUNITY_MODELS = [
+    'Hubleto\\App\\Community\\Documents\\Models\\Document' => 'Hubleto\\App\\External\\WaiBlue\\HlthcrDocuments',
+  ];
+
   // Related records that Hubleto's own forms save together with the record.
   const ALLOWED_SAVE_RELATIONS = [
     'Hubleto\\App\\Community\\Customers\\Models\\Customer' => ['TAGS'],
@@ -148,6 +154,8 @@ class RecordWriteGuard extends \Hubleto\Erp\Core implements RouteGuard
   // "Hubleto\App\External\WaiBlue\HlthcrBranches\Models\Branch" belongs to "Hubleto\App\External\WaiBlue\HlthcrBranches".
   private function getAppNamespaceOfModel(string $modelClass): string
   {
+    if (isset(self::APPS_OF_COMMUNITY_MODELS[$modelClass])) return self::APPS_OF_COMMUNITY_MODELS[$modelClass];
+
     $modelsPosition = strpos($modelClass, '\\Models\\');
     if ($modelsPosition === false) return '';
     return substr($modelClass, 0, $modelsPosition);
